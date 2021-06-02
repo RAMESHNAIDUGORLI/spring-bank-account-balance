@@ -1,0 +1,76 @@
+openapi: '3.0.0'
+info:
+  title: Spy auth API
+  description: Spy Auth System
+  version: "0.1"
+
+tags:
+  - name: Registration
+    description: User registration
+
+paths:
+  '/registerUser':
+    post:
+      tags:
+        - Registration
+      operationId: registerUser
+      summary: Registers given user in spy auth system
+      description: Registers given user in spy auth system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerRequest'
+      responses:
+        '200':    # status code
+          description: Return temporary password
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request
+  '/getUserDetails/{userId}':
+    get:
+      tags:
+        - Registration
+      operationId: getUserDetails
+      summary: Get user given user details in spy auth system
+      description: Get user given user details in spy auth system
+      parameters:
+        - name: userId
+          in: path
+          description: userId of an user
+          required: true
+          schema:
+            $ref: '#/components/schemas/userId'
+      responses:
+        '200':    # status code
+          description: Return user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/registerRequest'
+        '400':
+          description: Bad request
+components:
+  schemas:
+    registerRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        userId:
+          type: string
+        type:
+          type: string
+          enum: [INDIVIDUAL,ORGANIZATION]
+        activationCode:
+          type: string
+
+    userId:
+      type: string
+      format: string
+      example: User123
+      description: userId of an user

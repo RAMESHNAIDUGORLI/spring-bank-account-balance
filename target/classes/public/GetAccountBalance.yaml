@@ -1,0 +1,60 @@
+openapi: '3.0.0'
+info:
+  description: Account balance check API
+  title: Account Balance Check
+  version: v1
+paths:
+  '/getAccountBalance/{accountId}/currency/{currency}':
+    get:
+      tags:
+        - Account Balance
+      operationId: getAccountBalance
+      summary: Get the account balance
+      description: Get the account balance for given account id
+      parameters:
+        - name: accountId
+          in: path
+          description: accountId for an user
+          required: true
+          schema:
+            $ref: '#/components/schemas/accountId'
+        - name: currency
+          in: path
+          description: currency details
+          required: true
+          schema:
+            $ref: '#/components/schemas/currency'
+      responses:
+        '200':    # status code
+          description: Return balance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+        '400':
+          description: Bad request
+components:
+  schemas:
+    response:
+      type: object
+      properties:
+        accountId:
+          type: string
+        amount:
+          type: string
+        currency:
+          type: string
+        userId:
+          type: string
+    accountId:
+      type: string
+      format: string
+      pattern: '^BNP\d{4}'
+      example: ACC123
+      description: account id
+    currency:
+      type: string
+      format: string
+      pattern: '(AUD|EUR)'
+      example: AUD
+      description: currency id
